@@ -7,10 +7,10 @@ using System.Security.Permissions;
 [module: UnverifiableCode]
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, SkipVerification = true)]
 
-namespace MyUserName
+namespace Infinite_Shrine_of_the_Mountain
 {
     [BepInDependency("com.bepis.r2api")]
-    [BepInPlugin("com.OkIGotIt.Infinite_Shrine_of_the_Mountain", "Infinite Shrine of the Mountain", "1.0.0")]
+    [BepInPlugin("com.OkIGotIt.Infinite_Shrine_of_the_Mountain", "Infinite Shrine of the Mountain", "1.0.1")]
     public class Infinite_Shrine_of_the_Mountain : BaseUnityPlugin
     {
         public static ConfigEntry<int> maxpurchase { get; set; }
@@ -29,9 +29,12 @@ namespace MyUserName
         private void PurchaseInteraction_OnInteractionBegin(On.RoR2.PurchaseInteraction.orig_OnInteractionBegin orig, PurchaseInteraction self, Interactor activator)
         {
             orig(self, activator);
-            var bossBehavior = self.GetComponent<ShrineBossBehavior>();
-            bossBehavior.maxPurchaseCount = maxpurchase.Value;
-            bossBehavior.refreshTimer = delaytime.Value;
+            if (self.displayNameToken.ToLower() == "shrine_boss_name")
+            {
+                var bossBehavior = self.GetComponent<ShrineBossBehavior>();
+                bossBehavior.maxPurchaseCount = maxpurchase.Value;
+                bossBehavior.refreshTimer = delaytime.Value;
+            }
         }
     }
 }
