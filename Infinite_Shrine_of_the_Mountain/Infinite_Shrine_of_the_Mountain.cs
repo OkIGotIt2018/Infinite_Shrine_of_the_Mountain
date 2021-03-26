@@ -9,8 +9,7 @@ using System.Security.Permissions;
 
 namespace Infinite_Shrine_of_the_Mountain
 {
-    [BepInDependency("com.bepis.r2api")]
-    [BepInPlugin("com.OkIGotIt.Infinite_Shrine_of_the_Mountain", "Infinite Shrine of the Mountain", "1.0.1")]
+    [BepInPlugin("com.OkIGotIt.Infinite_Shrine_of_the_Mountain", "Infinite Shrine of the Mountain", "1.0.2")]
     public class Infinite_Shrine_of_the_Mountain : BaseUnityPlugin
     {
         public static ConfigEntry<int> maxpurchase { get; set; }
