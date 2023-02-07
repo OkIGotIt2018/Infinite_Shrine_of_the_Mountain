@@ -1,6 +1,10 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
+using RiskOfOptions;
+using RiskOfOptions.OptionConfigs;
+using RiskOfOptions.Options;
 using RoR2;
+using System;
 using System.Security;
 using System.Security.Permissions;
 
@@ -9,20 +13,35 @@ using System.Security.Permissions;
 
 namespace Infinite_Shrine_of_the_Mountain
 {
-    [BepInPlugin("com.OkIGotIt.Infinite_Shrine_of_the_Mountain", "Infinite Shrine of the Mountain", "1.0.2")]
+    [BepInPlugin("com.OkIGotIt.Infinite_Shrine_of_the_Mountain", "Infinite Shrine of the Mountain", "1.0.3")]
+    [BepInDependency("com.rune580.riskofoptions", BepInDependency.DependencyFlags.SoftDependency)]
     public class Infinite_Shrine_of_the_Mountain : BaseUnityPlugin
     {
         public static ConfigEntry<int> maxpurchase { get; set; }
         public static ConfigEntry<float> delaytime { get; set; }
         public void Awake()
         {
-            maxpurchase = Config.Bind<int>("Shrine of the Mountain", "Max uses", 2147483647, "Changes how many times you can use Shrine of the Mountain");
-            delaytime = Config.Bind<float>("Shrine of the Mountain", "Delay time", 2, "Changes the amount of time between Shrine of the Mountain uses");
-            if (maxpurchase.Value < 0 || maxpurchase.Value > 2147483647)
-                maxpurchase.Value = 2147483647;
-            if (delaytime.Value < 0 || delaytime.Value > 2147483647)
-                delaytime.Value = 2;
+            maxpurchase = Config.Bind<int>("Shrine of the Mountain", "Max uses", 2147483647, new ConfigDescription("Changes how many times you can use Shrine of the Mountain", new AcceptableValueRange<int>(0, 2147483647)));
+            delaytime = Config.Bind<float>("Shrine of the Mountain", "Delay time", 2, new ConfigDescription("Changes the amount of time between Shrine of the Mountain uses", new AcceptableValueRange<float>(0, 2147483647)));
+
             On.RoR2.PurchaseInteraction.OnInteractionBegin += PurchaseInteraction_OnInteractionBegin;
+            if (BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions"))
+                RiskOfOptionsInGameConfig();
+		}
+
+        public static void RiskOfOptionsInGameConfig()
+        {
+            ModSettingsManager.AddOption(new IntSliderOption(maxpurchase, new IntSliderConfig
+            {
+                min = 0,
+                max = 250
+            }));
+            ModSettingsManager.AddOption(new SliderOption(delaytime, new SliderConfig
+            {
+                min = 0f,
+                max = 600f,
+                formatString = "{0:0}s"
+            }));
         }
 
         private void PurchaseInteraction_OnInteractionBegin(On.RoR2.PurchaseInteraction.orig_OnInteractionBegin orig, PurchaseInteraction self, Interactor activator)
