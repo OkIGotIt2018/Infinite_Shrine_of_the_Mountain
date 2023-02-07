@@ -37,6 +37,9 @@
     <Reference Include="com.unity.multiplayer-hlapi.Runtime">
       <HintPath>..\..\ahope\stubs\com.unity.multiplayer-hlapi.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="ExtraChallengeShrines">
+      <HintPath>..\..\ahope\ExtraChallengeShrines.dll</HintPath>
+    </Reference>
     <Reference Include="HGCSharpUtils, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ahope\stubs\HGCSharpUtils.dll</HintPath>
@@ -55,6 +58,9 @@
     </Reference>
     <Reference Include="MonoMod.Utils">
       <HintPath>..\..\ahope\MonoMod.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="MoreMountains">
+      <HintPath>..\..\ahope\MoreMountains.dll</HintPath>
     </Reference>
     <Reference Include="RiskOfOptions">
       <HintPath>..\..\ahope\RiskOfOptions.dll</HintPath>
